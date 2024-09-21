@@ -18,6 +18,10 @@ pipeline {
         RESULTS_DIR = 'jmeter_results'                     // Carpeta para almacenar resultados de JMeter*/
     }
 
+    tools {
+        nodejs "NodeJS_10.16.3"
+    }
+
     stages {
         stage('Clone Code') {
             steps {
@@ -28,11 +32,11 @@ pipeline {
         stage('Install Dependencies') {
             steps {
                 //sh 'nvm install 10.16.3'
-                //sh 'npm install'
-                sh '''
+                sh 'npm install'
+                /*sh '''
                 node -v  # Verificar que Node.js está instalado
                 npm install
-                '''
+                '''*/
             }
         }
 
