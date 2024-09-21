@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: Sofka-DevOps-Test
+  labels:
+    app: Sofka-DevOps-Test
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: Sofka-DevOps-Test
+  template:
+    metadata:
+      labels:
+        app: Sofka-DevOps-Test
+    spec:
+      containers:
+      - name: Sofka-DevOps-Test
+        image: joshlopez07/Sofka-DevOps-Test:1.0.0 
+        ports:
+        - containerPort: 3000
+        env:
+        - name: SPRING_PROFILES_ACTIVE
+          value: "prod"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: Sofka-DevOps-Test
+spec:
+  type: NodePort
+  selector:
+    app: Sofka-DevOps-Test
+  ports:
+  - protocol: TCP
+    port: 3000
+    targetPort: 3000
+    nodePort: 30007
+
+---
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: Sofka-DevOps-Test-hpa
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: Sofka-DevOps-Test
+  minReplicas: 2
+  maxReplicas: 4
+  targetCPUUtilizationPercentage: 50
