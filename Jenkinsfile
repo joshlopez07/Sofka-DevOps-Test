@@ -27,7 +27,7 @@ pipeline {
 
         stage('Install Dependencies') {
             steps {
-                sh 'nvm install 10.16.3'
+                //sh 'nvm install 10.16.3'
                 sh 'npm install'
             }
         }
