@@ -28,7 +28,11 @@ pipeline {
         stage('Install Dependencies') {
             steps {
                 //sh 'nvm install 10.16.3'
-                sh 'npm install'
+                //sh 'npm install'
+                sh '''
+                node -v  # Verificar que Node.js está instalado
+                npm install
+                '''
             }
         }
 
